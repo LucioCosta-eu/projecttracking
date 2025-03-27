@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Solicitação de Alteração de Projeto</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            max-width: 21cm; /* Largura A4 */
+            margin: 0 auto;
+            padding: 15px;
+            font-size: 11pt; /* Tamanho de fonte adequado para impressão */
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .warning-box {
+            background-color: #ffdddd;
+            border-left: 6px solid #f44336;
+            padding: 8px;
+            margin-bottom: 15px;
+            font-size: 10pt;
+        }
+        .section {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            page-break-inside: avoid; /* Evita quebra de seção entre páginas */
+        }
+        .section-title {
+            background-color: #f0f0f0;
+            padding: 8px;
+            margin: -10px -10px 10px -10px;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            font-size: 11pt;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 6px;
+            text-align: left;
+            font-size: 10pt;
+        }
+        textarea {
+            width: 100%;
+            min-height: 50px;
+            padding: 5px;
+            resize: vertical;
+            font-size: 10pt;
+        }
+        input[type="text"], input[type="date"], input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 10pt;
+        }
+        .checkboxes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 10pt;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .approval-section {
+            background-color: #e9f7ef;
+            padding: 8px;
+            margin-top: 10px;
+        }
+        .footer {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .flow-box {
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            padding: 8px;
+            margin: 15px 0;
+            font-size: 10pt;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            font-size: 10pt;
+        }
+        h1 {
+            font-size: 14pt;
+            margin-bottom: 5px;
+        }
+        p {
+            margin-bottom: 5px;
+        }
+        /* Estilos específicos para impressão */
+        @media print {
+            body {
+                width: 21cm;
+                height: 29.7cm;
+                margin: 0;
+                padding: 0.5cm;
+                font-size: 10pt;
+            }
+            .no-print {
+                display: none;
+            }
+            .section {
+                margin-bottom: 10px;
+                padding: 8px;
+            }
+            .section-title {
+                padding: 6px;
+                margin: -8px -8px 8px -8px;
+            }
+            textarea {
+                min-height: 40px;
+            }
+            .flow-box {
+                padding: 5px;
+                margin: 10px 0;
+            }
+            .warning-box {
+                padding: 5px;
+                margin-bottom: 10px;
+            }
+            input[type="submit"], button {
+                display: none;
+            }
+            /* Controles de quebra de página */
+            .page-break-before {
+                page-break-before: always;
+            }
+            .page-break-after {
+                page-break-after: always;
+            }
+            .avoid-break {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>FORMULÁRIO DE SOLICITAÇÃO DE ALTERAÇÃO DE PROJETO</h1>
+        <p>Data: <input type="date" name="dataFormulario" required></p>
+    </div>
+
+    <div class="warning-box">
+        <strong>ATENÇÃO!</strong><br>
+        Este formulário deve ser preenchido <strong>ANTES</strong> de qualquer comunicação com o cliente sobre possíveis alterações.<br>
+        Solicitações sem <strong>TODAS</strong> as informações abaixo serão <strong>AUTOMATICAMENTE REJEITADAS</strong>.
+    </div>
+
+    <form id="alteracaoForm">
+        <div class="section">
+            <div class="section-title">1. INFORMAÇÕES BÁSICAS</div>
+            <table>
+                <tr>
+                    <td width="40%"><strong>Nome do Projeto:</strong></td>
+                    <td><input type="text" name="nomeProjeto" required></td>
+                </tr>
+                <tr>
+                    <td><strong>Cliente:</strong></td>
+                    <td><input type="text" name="cliente" required></td>
+                </tr>
+                <tr>
+                    <td><strong>Contrato nº:</strong></td>
+                    <td><input type="text" name="contratoNum" required></td>
+                </tr>
+                <tr>
+                    <td><strong>Valor total do Contrato:</strong></td>
+                    <td><input type="text" name="valorContrato" placeholder="R$" required></td>
+                </tr>
+                <tr>
+                    <td><strong>Data prevista de entrega:</strong></td>
+                    <td><input type="date" name="dataEntrega" required></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. SOLICITANTE</div>
+            <table>
+                <tr>
+                    <td width="40%"><strong>Nome:</strong></td>
+                    <td><input type="text" name="nomeSolicitante" required></td>
+                </tr>
+                <tr>
+                    <td><strong>Departamento:</strong></td>
+                    <td><input type="text" name="departamento" required></td>
+                </tr>
+                <tr>
+                    <td><strong>Quem sugeriu a alteração?</strong></td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="origemAlteracao" id="cliente" value="cliente" required>
+                                <label for="cliente">Cliente</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="origemAlteracao" id="vendedor" value="vendedor">
+                                <label for="vendedor">Vendedor</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="origemAlteracao" id="engenharia" value="engenharia">
+                                <label for="engenharia">Engenharia</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="origemAlteracao" id="producao" value="producao">
+                                <label for="producao">Produção</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="origemAlteracao" id="outros" value="outros">
+                                <label for="outros">Outros:</label>
+                                <input type="text" name="outrosOrigem" style="width: 100px;">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. ALTERAÇÃO PROPOSTA</div>
+            <p><strong>Descreva de forma CLARA e OBJETIVA a alteração:</strong></p>
+            <textarea name="descricaoAlteracao" required></textarea>
+            
+            <p><strong>OBRIGATÓRIO: Esta alteração foi previamente consultada com o setor técnico?</strong></p>
+            <div class="checkboxes">
+                <div class="checkbox-item">
+                    <input type="radio" name="consultaTecnica" id="sim" value="sim" required>
+                    <label for="sim">SIM</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" name="consultaTecnica" id="nao" value="nao">
+                    <label for="nao">NÃO</label>
+                </div>
+            </div>
+            
+            <div id="consultaSimDetails" style="display: none; margin-top: 10px; padding: 10px; background-color: #f9f9f9;">
+                <table>
+                    <tr>
+                        <td width="40%"><strong>Nome do técnico consultado:</strong></td>
+                        <td><input type="text" name="nomeTecnico"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data da consulta:</strong></td>
+                        <td><input type="date" name="dataConsulta"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div id="consultaNaoWarning" class="error-message" style="display: none; margin-top: 10px;">
+                <strong>FORMULÁRIO SERÁ DEVOLVIDO - Consulte a engenharia antes de submeter</strong>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. JUSTIFICATIVA DA ALTERAÇÃO</div>
+            <p><strong>Por que esta alteração é necessária? (OBRIGATÓRIO)</strong></p>
+            <textarea name="justificativa" required></textarea>
+            
+            <p><strong>Quem vai arcar com os custos?</strong></p>
+            <div class="checkboxes">
+                <div class="checkbox-item">
+                    <input type="radio" name="custos" id="custoCliente" value="cliente" required>
+                    <label for="custoCliente">Cliente</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" name="custos" id="custoEmpresa" value="empresa">
+                    <label for="custoEmpresa">Empresa</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" name="custos" id="custoCompartilhado" value="compartilhado">
+                    <label for="custoCompartilhado">Compartilhado</label>
+                    <input type="text" name="percentuais" placeholder="Percentuais" style="width: 150px;">
+                </div>
+            </div>
+            
+            <p><strong>Esta alteração está prevista no contrato?</strong></p>
+            <div class="checkboxes">
+                <div class="checkbox-item">
+                    <input type="radio" name="previsaoContrato" id="previsaoSim" value="sim" required>
+                    <label for="previsaoSim">SIM</label>
+                    <input type="text" name="clausula" placeholder="Cláusula" style="width: 150px;">
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" name="previsaoContrato" id="previsaoNao" value="nao">
+                    <label for="previsaoNao">NÃO</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">5. PRÉ-ANÁLISE TÉCNICA (OBRIGATÓRIO - Deve ser preenchido pela Engenharia)</div>
+            <table>
+                <tr>
+                    <td width="50%"><strong>A alteração é tecnicamente viável?</strong></td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="viabilidade" id="viabilidadeSim" value="sim">
+                                <label for="viabilidadeSim">SIM</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="viabilidade" id="viabilidadeNao" value="nao">
+                                <label for="viabilidadeNao">NÃO</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="viabilidade" id="viabilidadeParcial" value="parcial">
+                                <label for="viabilidadeParcial">PARCIALMENTE</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Impacto estimado no cronograma:</strong></td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="impactoCronograma" id="semImpacto" value="nenhum">
+                                <label for="semImpacto">Nenhum</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="impactoCronograma" id="atraso" value="atraso">
+                                <label for="atraso">Atraso de</label>
+                                <input type="number" name="diasAtraso" style="width: 60px;"> dias
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="impactoCronograma" id="inviabiliza" value="inviabiliza">
+                                <label for="inviabiliza">Inviabiliza prazo contratual</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Impacto estimado nos custos:</strong></td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="impactoCustos" id="semCusto" value="nenhum">
+                                <label for="semCusto">Nenhum</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="impactoCustos" id="aumentoCusto" value="aumento">
+                                <label for="aumentoCusto">Aumento de aproximadamente R$</label>
+                                <input type="text" name="valorAumento" style="width: 100px;">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>É necessário refazer cálculos estruturais?</strong></td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="refazerCalculos" id="calculosSim" value="sim">
+                                <label for="calculosSim">SIM</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="refazerCalculos" id="calculosNao" value="nao">
+                                <label for="calculosNao">NÃO</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Afeta outros sistemas/componentes?</strong></td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaSistemas" id="sistemasSim" value="sim">
+                                <label for="sistemasSim">SIM (especificar abaixo)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaSistemas" id="sistemasNao" value="nao">
+                                <label for="sistemasNao">NÃO</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <p><strong>Parecer técnico resumido:</strong></p>
+            <textarea name="parecerTecnico"></textarea>
+            
+            <div style="margin-top: 20px;">
+                <table>
+                    <tr>
+                        <td width="20%"><strong>Responsável Técnico:</strong></td>
+                        <td width="40%">
+                            <strong>Nome:</strong> <input type="text" name="nomeResponsavel">
+                        </td>
+                        <td width="20%">
+                            <strong>CREA/CAU:</strong> <input type="text" name="registroProfissional">
+                        </td>
+                        <td width="20%">
+                            <strong>Assinatura:</strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">6. IMPACTOS EM OUTROS DEPARTAMENTOS</div>
+            <table>
+                <tr>
+                    <th>Departamento</th>
+                    <th>Afeta?</th>
+                    <th>Parecer Resumido</th>
+                </tr>
+                <tr>
+                    <td>Compras</td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaCompras" id="comprasSim" value="sim">
+                                <label for="comprasSim">SIM</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaCompras" id="comprasNao" value="nao">
+                                <label for="comprasNao">NÃO</label>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text" name="parecerCompras"></td>
+                </tr>
+                <tr>
+                    <td>Produção</td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaProducao" id="producaoSim" value="sim">
+                                <label for="producaoSim">SIM</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaProducao" id="producaoNao" value="nao">
+                                <label for="producaoNao">NÃO</label>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text" name="parecerProducao"></td>
+                </tr>
+                <tr>
+                    <td>Logística</td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaLogistica" id="logisticaSim" value="sim">
+                                <label for="logisticaSim">SIM</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaLogistica" id="logisticaNao" value="nao">
+                                <label for="logisticaNao">NÃO</label>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text" name="parecerLogistica"></td>
+                </tr>
+                <tr>
+                    <td>Instalação</td>
+                    <td>
+                        <div class="checkboxes">
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaInstalacao" id="instalacaoSim" value="sim">
+                                <label for="instalacaoSim">SIM</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="radio" name="afetaInstalacao" id="instalacaoNao" value="nao">
+                                <label for="instalacaoNao">NÃO</label>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text" name="parecerInstalacao"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">7. DECISÃO PRELIMINAR (Coordenação de Projetos)</div>
+            <div class="checkboxes">
+                <div class="checkbox-item">
+                    <input type="radio" name="decisao" id="rejeitado" value="rejeitado">
+                    <label for="rejeitado">REJEITADO</label>
+                    <input type="text" name="motivoRejeicao" placeholder="Motivo" style="width: 300px;">
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" name="decisao" id="aprovado" value="aprovado">
+                    <label for="aprovado">APROVADO PARA ANÁLISE COMPLETA</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" name="decisao" id="necessitaInfo" value="necessitaInfo">
+                    <label for="necessitaInfo">NECESSITA INFORMAÇÕES ADICIONAIS:</label>
+                    <input type="text" name="infoAdicionais" style="width: 300px;">
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <table>
+                    <tr>
+                        <td width="20%"><strong>Coordenador:</strong></td>
+                        <td width="50%"><input type="text" name="nomeCoord"></td>
+                        <td width="30%"><strong>Data:</strong> <input type="date" name="dataCoord"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="flow-box">
+            <strong>FLUXO OBRIGATÓRIO:</strong>
+            <ol>
+                <li><strong>SOLICITANTE</strong>: Preenche seções 1, 2, 3 e 4.</li>
+                <li><strong>ENGENHARIA</strong>: Avalia tecnicamente e preenche seção 5.</li>
+                <li><strong>COORDENAÇÃO</strong>: Decide se a solicitação prossegue (seção 7).</li>
+                <li><strong>DEPARTAMENTOS IMPACTADOS</strong>: Preenchem seção 6 (se aprovado).</li>
+                <li><strong>DIRETORIA/GERÊNCIA</strong>: Decisão final.</li>
+            </ol>
+            
+            <p><strong>IMPORTANTE: ALTERAÇÕES NÃO AUTORIZADAS RESULTARÃO EM RESPONSABILIZAÇÃO DOS ENVOLVIDOS.</strong></p>
+        </div>
+
+        <div class="no-print">
+            <button type="button" onclick="window.print()" style="padding: 10px 20px; background-color: #2196F3; color: white; border: none; cursor: pointer; font-size: 16px;">Imprimir Formulário</button>
+        </div>
+    </form>
+
+    <script>
+        // Script para mostrar/esconder campos dependendo da seleção
+        document.addEventListener('DOMContentLoaded', function() {
+            // Campos de consulta técnica
+            const consultaSim = document.getElementById('sim');
+            const consultaNao = document.getElementById('nao');
+            const consultaSimDetails = document.getElementById('consultaSimDetails');
+            const consultaNaoWarning = document.getElementById('consultaNaoWarning');
+            
+            consultaSim.addEventListener('change', function() {
+                if(this.checked) {
+                    consultaSimDetails.style.display = 'block';
+                    consultaNaoWarning.style.display = 'none';
+                }
+            });
+            
+            consultaNao.addEventListener('change', function() {
+                if(this.checked) {
+                    consultaSimDetails.style.display = 'none';
+                    consultaNaoWarning.style.display = 'block';
+                }
+            });
+            
+            // Validação do formulário
+            document.getElementById('alteracaoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Verificar se a consulta técnica foi feita
+                if(consultaNao.checked) {
+                    alert('ATENÇÃO: Este formulário não pode ser processado sem consulta prévia ao setor técnico. Por favor, consulte a engenharia antes de submeter.');
+                    return;
+                }
+                
+                // Aqui você pode adicionar código para enviar o formulário 
+                // por email ou salvá-lo em um sistema
+                alert('Formulário enviado com sucesso!');
+            });
+        });
+    </script>
+</body>
+</html>
